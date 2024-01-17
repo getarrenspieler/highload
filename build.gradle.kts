@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.1"
@@ -38,8 +40,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-//    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.flywaydb:flyway-maven-plugin:8.5.4")
     implementation("org.flywaydb:flyway-core:8.5.4")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
@@ -82,13 +82,7 @@ openApiGenerate {
         "dateLibrary" to "java8",
         "openApiNullable" to "false"
     )
-
-
-//    modelFilesConstrainedTo = listOf("User")
 }
-
-
-
 
 tasks {
     val openApiGenerate by getting
@@ -100,4 +94,12 @@ tasks {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<BootJar> {
+    archiveFileName.set("${project.name}.jar")
+}
+
+tasks.named("jar") {
+    enabled = false
 }

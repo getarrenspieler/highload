@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "ba75fc81-149c-4783-8fa1-040663dfd8cb",
+		"name": "highload",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23906819",
+		"_collection_link": "https://orange-flare-671309.postman.co/workspace/Tinode~6eab2a3d-61e4-460e-b8ed-4e621d6fb077/collection/23906819-ba75fc81-149c-4783-8fa1-040663dfd8cb?action=share&source=collection_link&creator=23906819"
+	},
+	"item": [
+		{
+			"name": "user/register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"Иван\",\r\n  \"second_name\": \"Иванов\",\r\n  \"birthdate\": \"2000-01-17\",\r\n  \"biography\": \"Хобби, интересы и т.п.\",\r\n  \"city\": \"Москва\",\r\n  \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/user/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"1985d408-c84c-4997-97e6-1a3af07027af\",\r\n  \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user/get/{id}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxOTg1ZDQwOC1jODRjLTQ5OTctOTdlNi0xYTNhZjA3MDI3YWYiLCJleHAiOjE3MDU1MjY4MTYsImlhdCI6MTcwNTUxOTYxNn0.eQ8IS45qc8g0UlZ8lTrfzeAyeWYqw8apZdjFIOBvspLNSfpIVvcg155TFufbKSTVh0Mv_8aigIl_8tjTvFgvTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/user/get/1985d408-c84c-4997-97e6-1a3af07027af",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user",
+						"get",
+						"1985d408-c84c-4997-97e6-1a3af07027af"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
