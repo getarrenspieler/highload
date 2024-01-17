@@ -34,3 +34,6 @@ replay_pid*
 
 # Ignore Gradle build output directory
 build
+
+# Ignore local properties
+application-local.yml

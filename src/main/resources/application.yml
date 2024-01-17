@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: highload
+  flyway:
+    enabled: true
+    locations: classpath:db/migrations
+  datasource:
+    driverClassname: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/highload?currentSchema=auth
+    username: postgres
+    password: User_123
+
+jwt:
+  key: 12345678
+  exp: 120
