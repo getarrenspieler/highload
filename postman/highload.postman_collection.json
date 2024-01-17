@@ -82,26 +82,19 @@
 			"name": "/user/get/{id}",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxOTg1ZDQwOC1jODRjLTQ5OTctOTdlNi0xYTNhZjA3MDI3YWYiLCJleHAiOjE3MDU1MjY4MTYsImlhdCI6MTcwNTUxOTYxNn0.eQ8IS45qc8g0UlZ8lTrfzeAyeWYqw8apZdjFIOBvspLNSfpIVvcg155TFufbKSTVh0Mv_8aigIl_8tjTvFgvTA",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/user/get/1985d408-c84c-4997-97e6-1a3af07027af",
+					"raw": "{{host}}/user/get/{id}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"user",
 						"get",
-						"1985d408-c84c-4997-97e6-1a3af07027af"
+						"{id}"
 					]
 				}
 			},

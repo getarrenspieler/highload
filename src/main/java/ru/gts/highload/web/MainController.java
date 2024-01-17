@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gts.highload.model.UserInfo;
@@ -59,8 +58,11 @@ public class MainController implements DefaultApi {
     }
 
     @Override
-    public ResponseEntity<User> userGetIdGet(String id) {
-        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ResponseEntity<User> userGetIdGet(
+//            @NotBlank(message = "id не должен быть пустым")
+            String id) {
+//        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 
         final UserInfo userInfo = userService.get(id);
         if (userInfo != null) {
@@ -74,6 +76,6 @@ public class MainController implements DefaultApi {
             return ResponseEntity.ok(user);
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 }

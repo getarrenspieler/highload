@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.gts.highload.config.SecurityConfiguration;
 import ru.gts.highload.security.service.TokenService;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final AntPathMatcher MATCHER = new AntPathMatcher();
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
 
@@ -37,9 +40,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Получаем токен из заголовка
         String authHeader = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, BEARER_PREFIX)) {
-            filterChain.doFilter(request, response);
-            return;
+        if (SecurityConfiguration.PERMITTED.stream().anyMatch(x -> MATCHER.match(x, request.getRequestURI()))
+            || StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, BEARER_PREFIX)) {
+                filterChain.doFilter(request, response);
+                return;
         }
 
         // Обрезаем префикс и получаем имя пользователя из токена
