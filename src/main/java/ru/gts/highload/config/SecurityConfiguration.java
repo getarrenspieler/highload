@@ -34,7 +34,8 @@ public class SecurityConfiguration {
     public static final List<String> PERMITTED = List.of(
             "/user/register",
             "/login",
-            "/user/get/*"
+            "/user/get/*",
+            "/user/search"
     );
 
     @Bean
