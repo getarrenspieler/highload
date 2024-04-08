@@ -35,7 +35,9 @@ public class SecurityConfiguration {
             "/user/register",
             "/login",
             "/user/get/*",
-            "/user/search"
+            "/user/search",
+            "/metrics",
+            "/metrics_names"
     );
 
     @Bean

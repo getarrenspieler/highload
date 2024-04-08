@@ -40,8 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Получаем токен из заголовка
         String authHeader = request.getHeader(AUTHORIZATION_HEADER);
-        if (SecurityConfiguration.PERMITTED.stream().anyMatch(x -> MATCHER.match(x, request.getRequestURI()))
-            || StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, BEARER_PREFIX)) {
+        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, BEARER_PREFIX)) {
                 filterChain.doFilter(request, response);
                 return;
         }
@@ -68,5 +67,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return SecurityConfiguration.PERMITTED.stream()
+                .anyMatch(x -> MATCHER.match(x, request.getRequestURI()));
     }
 }
