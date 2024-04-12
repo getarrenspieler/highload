@@ -17,6 +17,8 @@ import ru.otus.highload.model.User;
 import ru.otus.highload.model.UserRegisterPostRequest;
 import ru.otus.highload.model.UserRegisterResponse;
 
+import java.util.List;
+
 @RestController
 @SecurityRequirement(name = "auth")
 @RequiredArgsConstructor
@@ -77,5 +79,10 @@ public class MainController implements DefaultApi {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @Override
+    public ResponseEntity<List<User>> userSearchGet(String firstName, String lastName) {
+        return ResponseEntity.ok(userService.findByName(firstName, lastName));
     }
 }
