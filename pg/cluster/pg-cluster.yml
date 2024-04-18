@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  pg1:
+    image: 'postgres:16.2'
+    container_name: pg1
+    hostname: pg1
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=User_123
+      - POSTGRES_DB=highload
+    volumes:
+      #   раскомментировать для монтирования локального каталога для хранения данных
+      - f:/pgdata/cluster/pg1:/var/lib/postgresql/data
+    networks:
+      - pgnet
+
+networks:
+  pgnet:
