@@ -14,6 +14,7 @@ services:
     volumes:
       #   раскомментировать для монтирования локального каталога для хранения данных
       - f:/pgdata/cluster/pg1:/var/lib/postgresql/data
+      - ./create_extensions.sql:/docker-entrypoint-initdb.d/create_extensions.sql:ro
     networks:
       - pgnet
 
@@ -30,6 +31,7 @@ services:
     volumes:
       #   раскомментировать для монтирования локального каталога для хранения данных
       - f:/pgdata/cluster/pg2:/var/lib/postgresql/data
+      - ./create_extensions.sql:/docker-entrypoint-initdb.d/create_extensions.sql:ro
     networks:
       - pgnet
 
@@ -46,8 +48,72 @@ services:
     volumes:
       #   раскомментировать для монтирования локального каталога для хранения данных
       - f:/pgdata/cluster/pg3:/var/lib/postgresql/data
+      - ./create_extensions.sql:/docker-entrypoint-initdb.d/create_extensions.sql:ro
     networks:
       - pgnet
+
+  pg-exporter-1:
+    container_name: pg-exporter-1
+    hostname: pg-exporter-1
+    image: prometheuscommunity/postgres-exporter:v0.11.1
+    command: --disable-settings-metrics
+#    command: --log.level=debug
+    environment:
+      DATA_SOURCE_URI: "pg1:5432/highload?sslmode=disable"
+      DATA_SOURCE_USER: postgres
+      DATA_SOURCE_PASS: User_123
+      PG_EXPORTER_EXTEND_QUERY_PATH: "/etc/postgres_exporter/queries.yaml"
+    volumes:
+      - ./queries.yaml:/etc/postgres_exporter/queries.yaml:ro
+    ports:
+      - "9187:9187"
+    networks:
+      - pgnet
+    restart: unless-stopped
+    depends_on:
+      - pg1
+
+  pg-exporter-2:
+    container_name: pg-exporter-2
+    hostname: pg-exporter-2
+    image: prometheuscommunity/postgres-exporter:v0.11.1
+    command: --disable-settings-metrics
+    #    command: --log.level=debug
+    environment:
+      DATA_SOURCE_URI: "pg2:5432/highload?sslmode=disable"
+      DATA_SOURCE_USER: postgres
+      DATA_SOURCE_PASS: User_123
+      PG_EXPORTER_EXTEND_QUERY_PATH: "/etc/postgres_exporter/queries.yaml"
+    volumes:
+      - ./queries.yaml:/etc/postgres_exporter/queries.yaml:ro
+    ports:
+      - "9188:9187"
+    networks:
+      - pgnet
+    restart: unless-stopped
+    depends_on:
+      - pg2
+
+  pg-exporter-3:
+    container_name: pg-exporter-3
+    hostname: pg-exporter-3
+    image: prometheuscommunity/postgres-exporter:v0.11.1
+    command: --disable-settings-metrics
+    #    command: --log.level=debug
+    environment:
+      DATA_SOURCE_URI: "pg3:5432/highload?sslmode=disable"
+      DATA_SOURCE_USER: postgres
+      DATA_SOURCE_PASS: User_123
+      PG_EXPORTER_EXTEND_QUERY_PATH: "/etc/postgres_exporter/queries.yaml"
+    volumes:
+      - ./queries.yaml:/etc/postgres_exporter/queries.yaml:ro
+    ports:
+      - "9189:9187"
+    networks:
+      - pgnet
+    restart: unless-stopped
+    depends_on:
+      - pg3
 
 networks:
   pgnet:

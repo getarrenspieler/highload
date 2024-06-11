@@ -24,7 +24,7 @@ spring:
     password: User_123
     hikari:
       maximum-pool-size: 300
-      minimum-idle: 100
+      minimum-idle: 10
 
 management:
   metrics:
