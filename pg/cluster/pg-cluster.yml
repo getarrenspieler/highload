@@ -17,5 +17,37 @@ services:
     networks:
       - pgnet
 
+  pg2:
+    image: 'postgres:16.2'
+    container_name: pg2
+    hostname: pg2
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=User_123
+      - POSTGRES_DB=highload
+    volumes:
+      #   раскомментировать для монтирования локального каталога для хранения данных
+      - f:/pgdata/cluster/pg2:/var/lib/postgresql/data
+    networks:
+      - pgnet
+
+  pg3:
+    image: 'postgres:16.2'
+    container_name: pg3
+    hostname: pg3
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=User_123
+      - POSTGRES_DB=highload
+    volumes:
+      #   раскомментировать для монтирования локального каталога для хранения данных
+      - f:/pgdata/cluster/pg3:/var/lib/postgresql/data
+    networks:
+      - pgnet
+
 networks:
   pgnet:
